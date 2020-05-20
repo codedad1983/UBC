@@ -19,6 +19,21 @@ class FormSet:
     def add_form(self, form):
         self.forms.append(form)
 
+    def __str__(self):
+        return ''.join([x.to_script() for x in self.forms])
+
+    def to_script(self):
+        return self.__str__()
+
+    def to_file(self):
+        with codecs.open('./grub.cfg', 'w', encoding='utf-8') as out:
+            for f in self.forms:
+                out.write('''
+menuentry "%s    >>" {
+    configfile $prefix/%s.cfg
+}
+                ''' % (f.title.replace('"', '\\"'), f.id))
+
 
 class Form:
     pass
@@ -32,7 +47,7 @@ class Form:
 
     def __str__(self):
         return '''
-submenu "%s" {
+submenu "%s    >>" {
     %s
     %s
     sleep 0
@@ -47,7 +62,7 @@ submenu "%s" {
             for f in self.subforms:
                 f.to_file()
                 out.write('''
-submenu "%s" {
+submenu "%s    >>" {
     configfile $prefix/%s.cfg
 }
                 ''' % (f.title.replace('"', '\\"'), f.id))
@@ -74,6 +89,7 @@ class Item:
         return '''
 submenu "%s" {
     set option=%s
+    setup_var $option
     %s
     sleep 0
 }
@@ -184,15 +200,15 @@ if __name__ == '__main__':
                                 continue
 
     # with codecs.open('./grub.cfg', 'w', encoding='utf-8') as out:
+    #     fs = FormSet()
     #     for form in formset.values():
-    #         out.write(form.to_script())
+    #         fs.add_form(form)
+    #     out.write(fs.to_script())
 
     for form in formset.values():
         form.to_file()
     with codecs.open('./grub.cfg', 'w', encoding='utf-8') as out:
+        fs = FormSet()
         for form in formset.values():
-            out.write('''
-menuentry "%s" {
-    configfile $prefix/%s.cfg
-}
-            ''' % (form.title, form.id))
+            fs.add_form(form)
+            fs.to_file()
