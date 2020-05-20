@@ -20,5 +20,10 @@ This tool is based on Windows 7/10 and python 2.7, and works for AMI UEFI BIOS
 5. Reboot your computer from GRUB2 disk in UEFI mode
 ```
 
+# Screenshots
+![UBC](https://github.com/qianchendi/assets/raw/master/VirtualBox_UEFI_20_05_2020_23_00_08.png)
+![UBC](https://github.com/qianchendi/assets/raw/master/VirtualBox_UEFI_20_05_2020_23_04_46.png)
+![UBC](https://github.com/qianchendi/assets/raw/master/VirtualBox_UEFI_20_05_2020_23_04_46.png)
+
 # License
 MIT License
