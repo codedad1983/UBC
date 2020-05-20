@@ -9,6 +9,7 @@ import traceback
 import codecs
 import re
 
+OUTDIR = './_Setup'
 
 class FormSet:
     pass
@@ -26,7 +27,7 @@ class FormSet:
         return self.__str__()
 
     def to_file(self):
-        with codecs.open('./grub.cfg', 'w', encoding='utf-8') as out:
+        with codecs.open('%s/grub.cfg' % (OUTDIR), 'w', encoding='utf-8') as out:
             for f in self.forms:
                 out.write('''
 menuentry "%s    >>" {
@@ -58,7 +59,7 @@ submenu "%s    >>" {
         return self.__str__()
     
     def to_file(self):
-        with codecs.open('./%s.cfg' % (self.id), 'w', encoding='utf-8') as out:
+        with codecs.open('%s/%s.cfg' % (OUTDIR, self.id), 'w', encoding='utf-8') as out:
             for f in self.subforms:
                 f.to_file()
                 out.write('''
@@ -199,7 +200,7 @@ if __name__ == '__main__':
                             except:
                                 continue
 
-    # with codecs.open('./grub.cfg', 'w', encoding='utf-8') as out:
+    # with codecs.open('%s/grub.cfg' % (OUTDIR), 'w', encoding='utf-8') as out:
     #     fs = FormSet()
     #     for form in formset.values():
     #         fs.add_form(form)
@@ -207,7 +208,6 @@ if __name__ == '__main__':
 
     for form in formset.values():
         form.to_file()
-    with codecs.open('./grub.cfg', 'w', encoding='utf-8') as out:
         fs = FormSet()
         for form in formset.values():
             fs.add_form(form)
