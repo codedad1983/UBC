@@ -73,10 +73,11 @@ class Item:
     def __str__(self):
         return '''
 submenu "%s" {
+    set option=%s
     %s
     sleep 0
 }
-        ''' % (self.name.replace('"', '\\"'), ''.join([x.to_script() for x in self.options]))
+        ''' % (self.name.replace('"', '\\"'), self.addr, ''.join([x.to_script() for x in self.options]))
 
     def to_script(self):
         return self.__str__()
@@ -97,15 +98,12 @@ class Option:
     def __str__(self):
         return '''
 submenu "%s%s" {
-    echo %s
+    setup_var $option %s
 }
         ''' % (self.name.replace('"', '\\"'), ' (default)' if self.default else '', self.value)
 
     def to_script(self):
         return self.__str__()
-
-    def set_addr(self, addr):
-        self.addr = addr
 
 
 if __name__ == '__main__':
@@ -152,7 +150,7 @@ if __name__ == '__main__':
                                 regx = re.compile(
                                     '^One Of: (.+?), VarStoreInfo \(VarOffset/VarName\): (.+?), VarStore: (.+?), QuestionId: (.+?), Size: (.+?), Min: (.+?), Max (.+?), Step: (.+?) \{.+\}$')
                                 vals = regx.findall(line[8:].strip())[0]
-                                item = Item(name=vals[0], addr=vals[2])
+                                item = Item(name=vals[0], addr=vals[1])
                                 form.add_item(item)
                             except:
                                 continue
@@ -184,9 +182,10 @@ if __name__ == '__main__':
                                     refs[vals[4]] = form
                             except:
                                 continue
-    with codecs.open('./grub.cfg', 'w', encoding='utf-8') as out:
-        for form in formset.values():
-            out.write(form.to_script())
+
+    # with codecs.open('./grub.cfg', 'w', encoding='utf-8') as out:
+    #     for form in formset.values():
+    #         out.write(form.to_script())
 
     for form in formset.values():
         form.to_file()
