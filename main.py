@@ -91,6 +91,9 @@ class Item:
 submenu "%s" {
     set option=%s
     setup_var $option
+    echo
+    echo Press [enter] key to continue...
+    read
     %s
     sleep 0
 }
@@ -116,6 +119,9 @@ class Option:
         return '''
 submenu "%s%s" {
     setup_var $option %s
+    echo
+    echo Press [enter] key to continue...
+    read
 }
         ''' % (self.name.replace('"', '\\"'), ' (default)' if self.default else '', self.value)
 

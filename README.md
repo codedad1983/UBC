@@ -14,7 +14,7 @@ I am not responsible for any losses or damages caused by the use of this program
 This tool is based on Windows 7/10 and python 2.7, and works for AMI UEFI BIOS
 ```
 1. Open Windows console
-2. Call AMISetup_IFR.bat <motherboard-bios-file>
+2. Call cmd /k AMISetup_IFR.bat <motherboard-bios-file>
 3. Call python main.py
 4. Copy all files in '_Setup' directory to GRUB2 config directory, overwrite the file if already exists
 5. Reboot your computer from GRUB2 disk in UEFI mode
