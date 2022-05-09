@@ -1,5 +1,5 @@
 # UBC
-UBC is an UEFI BIOS Configurator based on GRUB2 with setup_var
+UBC is an UEFI BIOS Configurator based on GRUB2 with setup_var. It works similarly to setup_var, but rather than changing variables through the GRUB command line manually, it creates GRUB menu entries based on the locations and offsets of the variables. It does this by creating GRUB config files taken from the extracted IFR of your BIOS binary, as well as a master GRUB config file. You must use a GRUB shell that has the setup_var command, but you don't necessarily have to use the one included in here. There are guides on how to manually apply the setup_var patch and compile GRUB from the source.
 
 # Warning
 Most laptop manufactures lock down their BIOSes very securely with RSA signing nowadays. This bypasses the dillema of finding a bypass to flash a modified BIOS and instead modifies the NVRAM registers instead.
